@@ -3,70 +3,232 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Search Results</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+    <title>Search Results - OpenHire</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-        .action-btn {
-            margin-top: 5px;
-            margin-right: 5px;
+        :root {
+            --dark-green: #1a472a;
+            --light-green: #2d8659;
+            --accent-green: #5cdb95;
+            --darker-bg: #0a0f0d;
+            --dark-bg: #121f16;
+            --text-light: #e9ecef;
         }
-        .chart-container {
-            position: relative;
-            height: 50px;
+        
+        body {
+            background-color: var(--darker-bg);
+            color: var(--text-light);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .container {
+            max-width: 1200px;
+        }
+
+        .page-header {
+            background: linear-gradient(45deg, var(--dark-green), var(--darker-bg));
+            padding: 2rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            border: 1px solid var(--accent-green);
+        }
+
+        .table {
+            color: var(--text-light);
+            background: var(--dark-bg);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .table thead th {
+            background-color: var(--dark-green);
+            color: var(--text-light);
+            border-bottom: 2px solid var(--accent-green);
+            padding: 1rem;
+            font-weight: 600;
+        }
+
+        .table tbody tr {
+            border-bottom: 1px solid rgba(92, 219, 149, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .table tbody tr:hover {
+            background-color: rgba(26, 71, 42, 0.3);
+        }
+
+        .table td {
+            padding: 1rem;
+            vertical-align: middle;
+        }
+
+        .email-cell {
+            background: rgba(92, 219, 149, 0.1);
+            border-radius: 4px;
+            padding: 0.2rem 0.5rem;
+            font-family: monospace;
+        }
+
+        .score-cell {
+            font-size: 1.1em;
+            font-weight: bold;
+        }
+
+        .btn-action {
+            margin: 0.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-invite {
+            background-color: var(--light-green);
+            border: none;
+            color: white;
+        }
+
+        .btn-invite:hover {
+            background-color: var(--accent-green);
+            color: var(--dark-green);
+        }
+
+        .btn-analyze {
+            background-color: rgba(92, 219, 149, 0.2);
+            border: 1px solid var(--accent-green);
+            color: var(--accent-green);
+        }
+
+        .btn-analyze:hover {
+            background-color: var(--accent-green);
+            color: var(--dark-green);
+        }
+
+        .btn-back {
+            background-color: var(--dark-green);
+            border: 1px solid var(--accent-green);
+            color: var(--text-light);
+        }
+
+        .btn-back:hover {
+            background-color: var(--accent-green);
+            color: var(--dark-green);
+        }
+
+        /* Modal Styling */
+        .modal-content {
+            background-color: var(--dark-bg);
+            border: 1px solid var(--accent-green);
+            color: var(--text-light);
+        }
+
+        .modal-header {
+            background-color: var(--dark-green);
+            border-bottom: 2px solid var(--accent-green);
+        }
+
+        .modal-footer {
+            border-top: 1px solid var(--accent-green);
+        }
+
+        .form-control {
+            background-color: rgba(92, 219, 149, 0.1);
+            border: 1px solid var(--accent-green);
+            color: var(--text-light);
+        }
+
+        .form-control:focus {
+            background-color: rgba(92, 219, 149, 0.2);
+            border-color: var(--accent-green);
+            color: var(--text-light);
+            box-shadow: 0 0 0 0.2rem rgba(92, 219, 149, 0.25);
+        }
+
+        .form-control:disabled {
+            background-color: rgba(92, 219, 149, 0.05);
+            color: var(--text-light);
+        }
+
+        .close {
+            color: var(--text-light);
+        }
+
+        .emoji-container {
+            text-align: center;
+            font-size: 3rem;
+            margin: 1rem 0;
+        }
+
+        .analysis-points {
+            background: rgba(92, 219, 149, 0.1);
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
         }
     </style>
 </head>
 <body>
-    <div class="container mt-5">
-        <h2>Search Results for "{{ query[:50] }}..."</h2>
-        <table class="table table-bordered" id="resultsTable">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Email</th>
-                    <th>Resume Text</th>
-                    <th>Score</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for resume in resumes %}
-                <tr>
-                    <td>{{ resume.id }}</td>
-                    <td><code>{{ resume.email }}</code></td>
-                    <td><i>{{ resume.resume_text[:100] }}...</i></td> <!-- Truncate long text for readability -->
-                    <td class="score-cell font-weight-bold">{{ resume.score }}</td>
-                    <td>
-                        <button class="btn btn-primary btn-sm action-btn" onclick="openInviteModal('{{ resume.id }}', '{{ resume.email }}')">Invite</button>
-                        <button class="btn btn-info btn-sm action-btn" onclick="analyzeCandidate('{{ resume.id }}')">Analyze</button>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        <a href="/" class="btn btn-secondary">Back to Search</a>
+    <div class="container mt-4">
+        <div class="page-header">
+            <h2><i class="fas fa-search me-2"></i>Search Results for "{{ query[:50] }}..."</h2>
+            <p class="--text-light mb-0">Found {{ resumes|length }} matching candidates</p>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table" id="resultsTable">
+                <thead>
+                    <tr>
+                        <th><i class="fas fa-id-badge me-2"></i>ID</th>
+                        <th><i class="fas fa-envelope me-2"></i>Email</th>
+                        <th><i class="fas fa-file-alt me-2"></i>Resume Text</th>
+                        <th><i class="fas fa-star me-2"></i>Score</th>
+                        <th><i class="fas fa-tasks me-2"></i>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for resume in resumes %}
+                    <tr>
+                        <td>{{ resume.id }}</td>
+                        <td><span class="email-cell">{{ resume.email }}</span></td>
+                        <td><em>{{ resume.resume_text[:100] }}...</em></td>
+                        <td class="score-cell">{{ resume.score }}</td>
+                        <td>
+                            <button class="btn btn-invite btn-sm btn-action" onclick="openInviteModal('{{ resume.id }}', '{{ resume.email }}')">
+                                <i class="fas fa-paper-plane me-1"></i> Invite
+                            </button>
+                            <button class="btn btn-analyze btn-sm btn-action" onclick="analyzeCandidate('{{ resume.id }}')">
+                                <i class="fas fa-chart-bar me-1"></i> Analyze
+                            </button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="mt-4 mb-5">
+            <a href="/" class="btn btn-back">
+                <i class="fas fa-arrow-left me-2"></i> Back to Search
+            </a>
+        </div>
     </div>
 
     <!-- Invite Modal -->
-    <div class="modal fade" id="inviteModal" tabindex="-1" aria-labelledby="inviteModalLabel" aria-hidden="true">
+    <div class="modal fade" id="inviteModal" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="inviteModalLabel">Send Invitation</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <h5 class="modal-title">
+                        <i class="fas fa-paper-plane me-2"></i>Send Invitation
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
                     <form id="inviteForm">
-                        <div class="form-group">
-                            <label for="candidateEmail">Candidate Email:</label>
+                        <div class="mb-3">
+                            <label class="form-label" for="candidateEmail">Candidate Email:</label>
                             <input type="email" class="form-control" id="candidateEmail" readonly>
                         </div>
-                        <div class="form-group">
-                            <label for="invitationMessage">Invitation Message:</label>
+                        <div class="mb-3">
+                            <label class="form-label" for="invitationMessage">Invitation Message:</label>
                             <textarea class="form-control" id="invitationMessage" rows="8">Dear Candidate, 
 
 We are pleased to invite you to discuss a potential opportunity with our company. Please let us know your availability for a meeting.
@@ -74,7 +236,9 @@ We are pleased to invite you to discuss a potential opportunity with our company
 Best regards,
 Freedom Telecom</textarea>
                         </div>
-                        <button type="button" class="btn btn-primary" onclick="sendInvitation()">Send Invitation</button>
+                        <button type="button" class="btn btn-invite w-100" onclick="sendInvitation()">
+                            <i class="fas fa-paper-plane me-2"></i>Send Invitation
+                        </button>
                     </form>
                 </div>
             </div>
@@ -82,46 +246,38 @@ Freedom Telecom</textarea>
     </div>
 
     <!-- Analyze Candidate Modal -->
-    <div class="modal fade" id="analyzeCandidateModal" tabindex="-1" aria-labelledby="analyzeCandidateLabel" aria-hidden="true">
+    <div class="modal fade" id="analyzeCandidateModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="analyzeCandidateLabel">Candidate Analysis</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <h5 class="modal-title">
+                        <i class="fas fa-chart-line me-2"></i>Candidate Analysis
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <!-- Candidate Fit Description -->
-                    <p id="candidateFitText">This candidate has an excellent fit for the role based on relevant skills and experience.</p>
+                    <p id="candidateFitText" class="lead"></p>
                     
-                    <!-- Suitability Emoji -->
-                    <p id="candidateSuitabilityEmoji" style="font-size: 40px;"></p>  <!-- Emoji will be displayed here -->
-
-                    <!-- Main Points List -->
-                    <h6>Main Suitability Points:</h6>
-                    <ul id="candidatePoints">
-                        <li>Highly relevant experience in similar roles</li>
-                        <li>Strong skill match for the requirements</li>
-                        <li>Good cultural fit based on past work</li>
-                    </ul>
+                    <div class="emoji-container" id="candidateSuitabilityEmoji"></div>
+                    
+                    <div class="analysis-points">
+                        <h6><i class="fas fa-check-circle me-2"></i>Main Suitability Points:</h6>
+                        <ul id="candidatePoints" class="mb-0"></ul>
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-back" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- JavaScript and Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
     <script>
         function openInviteModal(candidateId, candidateEmail) {
             document.getElementById('candidateEmail').value = candidateEmail;
             document.getElementById('inviteModal').dataset.candidateId = candidateId;
-            $('#inviteModal').modal('show');
+            new bootstrap.Modal(document.getElementById('inviteModal')).show();
         }
 
         function sendInvitation() {
@@ -140,12 +296,13 @@ Freedom Telecom</textarea>
             .then(response => response.json())
             .then(data => {
                 alert(`Invitation sent to ${candidateEmail}`);
-                $('#inviteModal').modal('hide');
+                bootstrap.Modal.getInstance(document.getElementById('inviteModal')).hide();
             })
             .catch(error => console.error('Error:', error));
         }
         
-        function analyzeCandidate(candidateId, jobRequirements) {
+        function analyzeCandidate(candidateId) {
+            const jobRequirements = ""; // Add job requirements if needed
             const url = `/api/get_ai_analysis?candidate_id=${candidateId}&requirements=${encodeURIComponent(jobRequirements)}`;
 
             fetch(url)
@@ -154,10 +311,11 @@ Freedom Telecom</textarea>
                     const fitScore = data.score;
                     const mainPoints = data.main_points;
 
-                    document.getElementById("candidateFitText").textContent = `Candidate ${candidateId} has a fit score of ${fitScore} for the role.`;
+                    document.getElementById("candidateFitText").textContent = 
+                        `Candidate ${candidateId} has a fit score of ${fitScore} for the role.`;
 
                     const candidatePointsList = document.getElementById("candidatePoints");
-                    candidatePointsList.innerHTML = ""; 
+                    candidatePointsList.innerHTML = "";
                     mainPoints.forEach(point => {
                         const listItem = document.createElement("li");
                         listItem.textContent = point;
@@ -165,34 +323,24 @@ Freedom Telecom</textarea>
                     });
 
                     updateSuitabilityEmoji(fitScore);
-
-                    $('#analyzeCandidateModal').modal('show');
+                    new bootstrap.Modal(document.getElementById('analyzeCandidateModal')).show();
                 })
                 .catch(error => console.error('Error fetching AI analysis:', error));
         }
 
         function updateSuitabilityEmoji(fitScore) {
             const emojiElement = document.getElementById("candidateSuitabilityEmoji");
-
             let emoji = "";
-            if (fitScore <= 10) {
-                emoji = "😞";  // Sad
-            } else if (fitScore <= 30) {
-                emoji = "😐";  // Neutral
-            } else if (fitScore <= 60) {
-                emoji = "🙂";  // Happy
-            } else if (fitScore <= 90) {
-                emoji = "😊";  // Very Happy
-            } else {
-                emoji = "😃";  // Excited
-            }
-
+            if (fitScore <= 10) emoji = "😞";
+            else if (fitScore <= 30) emoji = "😐";
+            else if (fitScore <= 60) emoji = "🙂";
+            else if (fitScore <= 90) emoji = "😊";
+            else emoji = "😃";
             emojiElement.textContent = emoji;
         }
 
         document.addEventListener("DOMContentLoaded", function() {
             const scoreCells = document.querySelectorAll("td.score-cell");
-    
             const scores = Array.from(scoreCells).map(cell => parseFloat(cell.textContent));
             const minScore = Math.min(...scores);
             const maxScore = Math.max(...scores);
@@ -201,11 +349,7 @@ Freedom Telecom</textarea>
             scoreCells.forEach(cell => {
                 const score = parseFloat(cell.textContent);
                 const normalizedScore = (score - minScore) / scoreRange;
-                
-                const red = Math.floor(255 * (1 - normalizedScore));
-                const green = Math.floor(255 * normalizedScore);
-                
-                cell.style.color = `rgb(${red}, ${green}, 0)`;
+                cell.style.color = `rgb(${Math.floor(255 * (1 - normalizedScore))}, ${Math.floor(255 * normalizedScore)}, 0)`;
             });
         });
     </script>

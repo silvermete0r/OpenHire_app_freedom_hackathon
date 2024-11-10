@@ -29,7 +29,7 @@ def get_info_by_id():
 
 @app.route('/api/get_positions', methods=['GET'])
 def get_positions():
-    return send_from_directory(os.path.join(app.root_path, 'data'), 'positions.json')
+    return send_from_directory(os.path.join(app.root_path, 'static'), 'positions.json')
 
 @app.route('/api/get_ai_analysis', methods=['GET'])
 def get_ai_analysis():

@@ -3,58 +3,248 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rank Candidates</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>OpenHire - Rank Candidates</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
+        :root {
+            --dark-green: #1a472a;
+            --light-green: #2d8659;
+            --accent-green: #5cdb95;
+            --darker-green: #0a1f12;
+        }
+        
+        body {
+            background-color: #0a0f0d;
+            color: #e9ecef;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background-color: var(--dark-green);
+            border-bottom: 2px solid var(--accent-green);
+        }
+
+        .form-container {
+            background: linear-gradient(45deg, var(--darker-green), var(--dark-green));
+            border: 1px solid var(--accent-green);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(92, 219, 149, 0.1);
+        }
+
+        .form-control {
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--accent-green);
+            color: #fff;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-color: var(--light-green);
+            box-shadow: 0 0 0 0.2rem rgba(92, 219, 149, 0.25);
+            color: #fff;
+        }
+
+        .form-control::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .btn-search {
+            background-color: var(--light-green);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .btn-search:hover {
+            background-color: var(--accent-green);
+            color: var(--dark-green);
+            transform: translateY(-2px);
+        }
+
         #suggestions {
-            border: 1px solid #ddd;
-            max-height: 150px;
-            overflow-y: hidden;
+            background-color: var(--darker-green);
+            border: 1px solid var(--accent-green);
+            border-top: none;
+            max-height: 200px;
+            overflow-y: auto;
             position: absolute;
             z-index: 1000;
-            width: 71%;
-            background-color: white;
+            width: 52%;
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+            scrollbar-width: thin;
+            scrollbar-color: var(--accent-green) var(--darker-green);
+        }
+
+        #suggestions::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        #suggestions::-webkit-scrollbar-track {
+            background: var(--darker-green);
+        }
+
+        #suggestions::-webkit-scrollbar-thumb {
+            background-color: var(--accent-green);
+            border-radius: 3px;
         }
 
         .suggestion-item {
-            padding: 8px;
+            padding: 12px 16px;
             cursor: pointer;
+            transition: all 0.2s ease;
+            color: #fff;
         }
 
         .suggestion-item:hover {
-            background-color: #f0f0f0;
+            background-color: var(--light-green);
+        }
+
+        .form-label {
+            color: var(--accent-green);
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .input-group {
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent-green);
+            z-index: 4;
+        }
+
+        .number-control {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .number-control .form-control {
+            text-align: center;
+        }
+
+        .number-btn {
+            background: none;
+            border: none;
+            color: var(--accent-green);
+            font-size: 1.2rem;
+            padding: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .number-btn:hover {
+            color: var(--light-green);
+        }
+
+        .animate-pop {
+            animation: pop 0.3s ease-out;
+        }
+
+        @keyframes pop {
+            0% { transform: scale(0.95); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
         }
     </style>
 </head>
 <body>
-    <div class="container mt-5">
-        <h2>Rank Candidates</h2>
-        <form action="/rank_candidates" method="POST">
-            <div class="form-group">
-                <label for="position">Position:</label>
-                <input type="text" class="form-control" id="position" name="position" required oninput="showSuggestions(this.value)">
-                <div id="suggestions"></div>
+    <nav class="navbar navbar-expand-lg navbar-dark mb-4">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-brain mr-2"></i> OpenHire
+            </a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="form-container animate-pop">
+                    <h2 class="text-center mb-4">
+                        <i class="fas fa-search mr-2"></i> Rank Candidates
+                    </h2>
+                    <form action="/rank_candidates" method="POST">
+                        <div class="form-group mb-4">
+                            <label class="form-label" for="position">
+                                <i class="fas fa-briefcase me-2"></i>Position
+                            </label>
+                            <div class="input-group">
+                                <input type="text" 
+                                       class="form-control" 
+                                       id="position" 
+                                       name="position" 
+                                       required 
+                                       oninput="showSuggestions(this.value)"
+                                       placeholder="Enter position title">
+                                <i class="fas fa-search input-icon"></i>
+                            </div>
+                            <div id="suggestions"></div>
+                        </div>
+
+                        <div class="form-group mb-4">
+                            <label class="form-label" for="requirements">
+                                <i class="fas fa-list-check me-2"></i>Requirements
+                            </label>
+                            <textarea class="form-control" 
+                                      id="requirements" 
+                                      name="requirements" 
+                                      rows="4" 
+                                      required
+                                      placeholder="Enter job requirements"></textarea>
+                        </div>
+
+                        <div class="form-group mb-4">
+                            <label class="form-label" for="k">
+                                <i class="fas fa-users me-2"></i>Number of Candidates Needed
+                            </label>
+                            <div class="number-control">
+                                <button type="button" class="number-btn" onclick="decrementValue()">
+                                    <i class="fas fa-minus-circle"></i>
+                                </button>
+                                <input type="number" 
+                                       class="form-control" 
+                                       id="k" 
+                                       name="k" 
+                                       min="5" 
+                                       value="5" 
+                                       max="100" 
+                                       step="1" 
+                                       required>
+                                <button type="button" class="number-btn" onclick="incrementValue()">
+                                    <i class="fas fa-plus-circle"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-search">
+                            <i class="fas fa-search me-2"></i>Find Best Matches
+                        </button>
+                    </form>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="requirements">Requirements:</label>
-                <textarea class="form-control" id="requirements" name="requirements" rows="4" required></textarea>
-            </div>
-            <div class="form-group">
-                <label for="k">Number of Candidates Needed:</label>
-                <input type="number" class="form-control" id="k" name="k" min="5" value="5" max="100" step="1" required>
-            </div>
-            <button type="submit" class="btn btn-primary">Search</button>
-        </form>
+        </div>
     </div>
 
     <script>
         let positions = []; 
 
+        // Fetch positions
         fetch('/api/get_positions')
             .then(response => response.json())
             .then(data => {
                 positions = data['positions'];
-                // console.log('Positions:', positions);
             })
             .catch(error => console.error('Error fetching positions:', error));
 
@@ -63,31 +253,61 @@
             suggestionsBox.innerHTML = '';  
 
             if (query.length === 0) {
-                return; 
+                suggestionsBox.style.display = 'none';
+                return;
             }
 
             const filteredPositions = positions.filter(position => 
                 position.toLowerCase().includes(query.toLowerCase())
             );
 
-            filteredPositions.forEach(position => {
-                const suggestionItem = document.createElement('div');
-                suggestionItem.classList.add('suggestion-item');
-                suggestionItem.textContent = position;
+            if (filteredPositions.length > 0) {
+                suggestionsBox.style.display = 'block';
+                filteredPositions.forEach(position => {
+                    const suggestionItem = document.createElement('div');
+                    suggestionItem.classList.add('suggestion-item');
+                    suggestionItem.textContent = position;
 
-                suggestionItem.onclick = function() {
-                    document.getElementById('position').value = position;
-                    suggestionsBox.innerHTML = '';  
-                };
+                    suggestionItem.onclick = function() {
+                        document.getElementById('position').value = position;
+                        suggestionsBox.style.display = 'none';
+                    };
 
-                suggestionsBox.appendChild(suggestionItem);
-            });
+                    suggestionsBox.appendChild(suggestionItem);
+                });
+            } else {
+                suggestionsBox.style.display = 'none';
+            }
+        }
+
+        function incrementValue() {
+            const input = document.getElementById('k');
+            const currentValue = parseInt(input.value);
+            if (currentValue < parseInt(input.max)) {
+                input.value = currentValue + 1;
+            }
+        }
+
+        function decrementValue() {
+            const input = document.getElementById('k');
+            const currentValue = parseInt(input.value);
+            if (currentValue > parseInt(input.min)) {
+                input.value = currentValue - 1;
+            }
         }
 
         document.addEventListener('click', function(event) {
             const suggestionsBox = document.getElementById('suggestions');
             if (!event.target.closest('#position') && !event.target.closest('#suggestions')) {
-                suggestionsBox.innerHTML = '';
+                suggestionsBox.style.display = 'none';
+            }
+        });
+
+        // Prevent form submission on Enter key in position input
+        document.getElementById('position').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                return false;
             }
         });
     </script>
