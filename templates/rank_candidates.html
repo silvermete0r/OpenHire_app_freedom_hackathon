@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rank Candidates</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        #suggestions {
+            border: 1px solid #ddd;
+            max-height: 150px;
+            overflow-y: hidden;
+            position: absolute;
+            z-index: 1000;
+            width: 71%;
+            background-color: white;
+        }
+
+        .suggestion-item {
+            padding: 8px;
+            cursor: pointer;
+        }
+
+        .suggestion-item:hover {
+            background-color: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>Rank Candidates</h2>
+        <form action="/rank_candidates" method="POST">
+            <div class="form-group">
+                <label for="position">Position:</label>
+                <input type="text" class="form-control" id="position" name="position" required oninput="showSuggestions(this.value)">
+                <div id="suggestions"></div>
+            </div>
+            <div class="form-group">
+                <label for="requirements">Requirements:</label>
+                <textarea class="form-control" id="requirements" name="requirements" rows="4" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="k">Number of Candidates Needed:</label>
+                <input type="number" class="form-control" id="k" name="k" min="5" value="5" max="100" step="1" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+    </div>
+
+    <script>
+        let positions = []; 
+
+        fetch('/api/get_positions')
+            .then(response => response.json())
+            .then(data => {
+                positions = data['positions'];
+                // console.log('Positions:', positions);
+            })
+            .catch(error => console.error('Error fetching positions:', error));
+
+        function showSuggestions(query) {
+            const suggestionsBox = document.getElementById('suggestions');
+            suggestionsBox.innerHTML = '';  
+
+            if (query.length === 0) {
+                return; 
+            }
+
+            const filteredPositions = positions.filter(position => 
+                position.toLowerCase().includes(query.toLowerCase())
+            );
+
+            filteredPositions.forEach(position => {
+                const suggestionItem = document.createElement('div');
+                suggestionItem.classList.add('suggestion-item');
+                suggestionItem.textContent = position;
+
+                suggestionItem.onclick = function() {
+                    document.getElementById('position').value = position;
+                    suggestionsBox.innerHTML = '';  
+                };
+
+                suggestionsBox.appendChild(suggestionItem);
+            });
+        }
+
+        document.addEventListener('click', function(event) {
+            const suggestionsBox = document.getElementById('suggestions');
+            if (!event.target.closest('#position') && !event.target.closest('#suggestions')) {
+                suggestionsBox.innerHTML = '';
+            }
+        });
+    </script>
+</body>
+</html>

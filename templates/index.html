@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenHire - Smart Recruitment System</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --dark-green: #1a472a;
+            --light-green: #2d8659;
+            --accent-green: #5cdb95;
+        }
+        
+        body {
+            background-color: #0a0f0d;
+            color: #e9ecef;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .navbar {
+            background-color: var(--dark-green);
+            border-bottom: 2px solid var(--accent-green);
+        }
+
+        .hero-section {
+            background: linear-gradient(45deg, var(--dark-green), #000);
+            padding: 4rem 0;
+            border-bottom: 1px solid var(--accent-green);
+        }
+
+        .feature-card {
+            background: rgba(26, 71, 42, 0.7);
+            border: 1px solid var(--accent-green);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(92, 219, 149, 0.2);
+        }
+
+        .btn-custom {
+            background-color: var(--light-green);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-custom:hover {
+            background-color: var(--accent-green);
+            color: var(--dark-green);
+        }
+
+        .faq-item {
+            background: rgba(26, 71, 42, 0.7);
+            border: 1px solid var(--accent-green);
+            margin-bottom: 1rem;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .faq-question {
+            cursor: pointer;
+            padding: 1rem;
+            background: var(--dark-green);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-answer {
+            padding: 0 1rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+
+        .faq-answer.active {
+            max-height: 500px;
+            padding: 1rem;
+        }
+
+        .icon-pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .map-container {
+            position: relative;
+            overflow: hidden;
+            padding-top: 56.25%; /* 16:9 Aspect Ratio */
+            border-radius: 8px;
+            border: 1px solid var(--accent-green);
+        }
+
+        .map-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-brain mr-2"></i> OpenHire
+            </a>
+        </div>
+    </nav>
+
+    <div class="hero-section">
+        <div class="container text-center">
+            <h1 class="display-4 mb-4">Welcome to OpenHire</h1>
+            <p class="lead">Smart Resume Analysis System</p>
+            <i class="fas fa-search icon-pulse fa-3x text-success mb-4"></i>
+        </div>
+    </div>
+
+    <div class="container mt-5">
+        <div class="row mb-5">
+            <div class="col-md-4">
+                <div class="feature-card p-4 text-center">
+                    <i class="fas fa-sort-amount-down fa-3x mb-3 text-success"></i>
+                    <h4>Efficient Ranking</h4>
+                    <p>Advanced candidate ranking based on your specific criteria</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card p-4 text-center">
+                    <i class="fas fa-language fa-3x mb-3 text-success"></i>
+                    <h4>Multilingual</h4>
+                    <p>Support for English, Kazakh, and Russian resumes</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card p-4 text-center">
+                    <i class="fas fa-bolt fa-3x mb-3 text-success"></i>
+                    <h4>Fast Search</h4>
+                    <p>Powered by TF-IDF ranking algorithm</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mb-5">
+            <h3>Ready to find your perfect candidate?</h3>
+            <a href="/rank_candidates" class="btn btn-custom btn-lg mt-3">
+                <i class="fas fa-search mr-2"></i> Start Ranking
+            </a>
+        </div>
+
+        <section class="mb-5">
+            <h3 class="mb-4">Frequently Asked Questions</h3>
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>How does the ranking work?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        The system uses TF-IDF (Term Frequency-Inverse Document Frequency) and cosine similarity to rank candidates. This ensures that the most relevant resumes match your search criteria accurately.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Which languages are supported?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Currently, we support English, Kazakh, and Russian resumes. Our system can accurately analyze and rank resumes in all these languages.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>How accurate is the matching?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Our system achieves high accuracy through advanced natural language processing techniques. The TF-IDF algorithm ensures that the most relevant candidates are ranked higher based on your specific requirements.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="text-center mb-4">
+            <p>&copy; 2024 OpenHire | All rights reserved</p>
+            <p><strong>Location:</strong> 123 Recruiting Avenue, City, Country</p>
+            <div class="map-container mt-3">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2503.558914210738!2d71.462424!3d51.135043599999996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x424583f6902cbc41%3A0x6415c8c8653866d0!2sSkillset!5e0!3m2!1sru!2skz!4v1731241652988!5m2!1sru!2skz" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </footer>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // FAQ Interaction
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const answer = question.nextElementSibling;
+                const icon = question.querySelector('i');
+                
+                // Toggle active class
+                answer.classList.toggle('active');
+                
+                // Rotate icon
+                icon.style.transition = 'transform 0.3s ease';
+                icon.style.transform = answer.classList.contains('active') ? 'rotate(180deg)' : 'rotate(0)';
+            });
+        });
+    </script>
+</body>
+</html>

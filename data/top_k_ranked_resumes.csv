@@ -1,0 +1,298 @@
+id,email,resume_text,score,lang
+d63d1840-5af9-4bdb-a575-35769d3a4957,madina.zhamiyeva@example.com,"Madina Zhamiyeva - Software Quality Engineer 
+Contact: 
+Email: madina.zhamiyeva@example.com 
+Summary: 
+Software Quality Engineer with a focus on test automation, bug tracking, and ensuring high-quality 
+software releases. Proﬁcient in various testing tools and methodologies. Known for meticulous 
+attention to detail and a collaborative approach to quality assurance. 
+Skills: 
+ 
+Automated Testing (Selenium, JUnit) 
+ 
+Manual Testing & Test Cases 
+ 
+Bug Tracking & Reporting (JIRA) 
+ 
+Agile & Scrum Methodologies 
+ 
+Regression & Performance Testing 
+Professional Experience: 
+ 
+Software Quality Engineer, QualityFirst Solutions 
+Designed and executed test plans, reducing bug occurrences in production by 15%. 
+Automated regression tests, improving testing eƯiciency. 
+ 
+Quality Assurance Analyst, SoftwareLab 
+Conducted manual and automated tests, ensuring high-quality releases and timely project 
+delivery. 
+Education: 
+Bachelor’s in Software Engineering, Nazarbayev University 
+ 
+",0.20672713553874233,en
+75da30c4-30e7-454c-bcc2-61bbcfe8c80c,aisha.malik@example.com,"Aisha Malik - Software Engineer 
+Contact: 
+Email: aisha.malik@example.com 
+Summary: 
+Skilled Software Engineer with a solid foundation in designing, developing, and optimizing web and 
+mobile applications. Proﬁcient in multiple programming languages including Python, JavaScript, 
+and Java, and experienced with both frontend and backend technologies. Known for delivering high-
+quality code with a focus on scalability and performance. Strong problem-solving skills and a 
+collaborative spirit, consistently achieving project milestones and contributing to product 
+innovation. 
+Core Competencies: 
+ 
+Full-stack Development (React, Node.js, Django) 
+ 
+Database Management (SQL, MongoDB) 
+ 
+Cloud Services (AWS, Azure) 
+ 
+Agile Methodologies and DevOps 
+Professional Experience: 
+ 
+Software Engineer, XYZ Tech Solutions 
+Contributed to the development of customer-centric applications, enhancing user 
+experience and application speed, and optimizing server performance. 
+ 
+Junior Developer, ABC Software 
+Collaborated in a cross-functional team to develop scalable web applications and 
+implemented RESTful APIs for enhanced functionality. 
+Education: 
+Bachelor of Science in Computer Science, Al-Farabi Kazakh National University 
+ 
+",0.1829572544193795,en
+eb866ec5-290a-41b5-8d98-61b0975a3abf,aidar.saktaganov@example.com,"Aidar Saktaganov - Mechanical Engineer 
+Contact: 
+Email: aidar.saktaganov@example.com 
+Summary: 
+Mechanical Engineer with expertise in mechanical design, materials science, and manufacturing 
+processes. Skilled in CAD software and known for developing eƯicient and durable mechanical 
+systems. Experienced in both research and hands-on applications. 
+Skills: 
+ 
+Mechanical Design & CAD (SolidWorks, AutoCAD) 
+ 
+Materials Science & Analysis 
+ 
+Product Development & Testing 
+ 
+Manufacturing Processes 
+ 
+Project Management 
+Professional Experience: 
+ 
+Mechanical Engineer, Industrial Dynamics LLC 
+Developed mechanical systems for manufacturing processes, increasing eƯiciency and 
+reducing production costs. 
+ 
+Junior Mechanical Engineer, TechBuild Solutions 
+Assisted in designing and testing mechanical prototypes, contributing to successful 
+product development. 
+Education: 
+Bachelor’s in Mechanical Engineering, Satbayev University 
+ 
+",0.11131315074468692,en
+b434eb7a-c862-479d-be60-df8158e3914a,maksat.bekbolat@example.com,"Maksat Bekbolat - Software Developer 
+Contact: 
+Email: maksat.bekbolat@example.com 
+Summary: 
+Proﬁcient Software Developer with expertise in both front-end and back-end development. 
+Experienced in building high-performance applications and optimizing code for speed and 
+eƯiciency. Passionate about learning new technologies and delivering seamless user experiences. 
+Skills: 
+ 
+JavaScript, Python, Java 
+ 
+Front-End (React, Angular) 
+ 
+Back-End (Node.js, Django) 
+ 
+Database Management (SQL, MongoDB) 
+ 
+Version Control (Git) 
+Professional Experience: 
+ 
+Software Developer, CodeFactory Ltd. 
+Developed full-stack applications, reducing page load times by 30% and enhancing user 
+engagement. 
+ 
+Junior Developer, WebTech Solutions 
+Assisted in front-end and back-end development, contributing to various client projects 
+and enhancing UI/UX. 
+Education: 
+Bachelor’s in Computer Science, Al-Farabi Kazakh National University 
+ 
+",0.09868301896357033,en
+63ad8fc9-ecf0-4021-af8d-89b2f01ed705,alibek.talgatuly@example.com,"Alibek Talgatuly - Mechanical Engineer 
+Contact: 
+Email: alibek.talgatuly@example.com 
+Summary: 
+Dedicated Mechanical Engineer with expertise in designing, analyzing, and testing mechanical 
+systems. Skilled in CAD modeling and prototyping, with a focus on durability and eƯiciency. Strong 
+background in manufacturing processes and materials science. 
+Skills: 
+ 
+Mechanical Design & Simulation (SolidWorks, ANSYS) 
+ 
+Prototyping & Testing 
+ 
+Materials Science & Selection 
+ 
+Manufacturing Processes 
+ 
+Project Documentation 
+Professional Experience: 
+ 
+Mechanical Engineer, Engineering Solutions Co. 
+Designed mechanical components for industrial applications, reducing production costs by 
+20% through eƯicient design. 
+ 
+Junior Mechanical Engineer, Industrial Design Group 
+Assisted in prototype testing and design adjustments, ensuring quality standards were met 
+for mass production. 
+Education: 
+Bachelor’s in Mechanical Engineering, Satbayev University 
+ 
+",0.09455697264932955,en
+d824a6fb-0e9a-41d2-a7a4-99dcadd34f1a,alibek.talgatuly@example.com,"Alibek Talgatuly - Mechanical Engineer 
+Contact: 
+Email: alibek.talgatuly@example.com 
+Summary: 
+Dedicated Mechanical Engineer with expertise in designing, analyzing, and testing mechanical 
+systems. Skilled in CAD modeling and prototyping, with a focus on durability and eƯiciency. Strong 
+background in manufacturing processes and materials science. 
+Skills: 
+ 
+Mechanical Design & Simulation (SolidWorks, ANSYS) 
+ 
+Prototyping & Testing 
+ 
+Materials Science & Selection 
+ 
+Manufacturing Processes 
+ 
+Project Documentation 
+Professional Experience: 
+ 
+Mechanical Engineer, Engineering Solutions Co. 
+Designed mechanical components for industrial applications, reducing production costs by 
+20% through eƯicient design. 
+ 
+Junior Mechanical Engineer, Industrial Design Group 
+Assisted in prototype testing and design adjustments, ensuring quality standards were met 
+for mass production. 
+Education: 
+Bachelor’s in Mechanical Engineering, Satbayev University 
+ 
+",0.09455697264932955,en
+744b551e-3884-402d-baa2-2c9c7712413e,aigerim.aibekova@example.com,"Aigerim Aibekova 
+Position: Data Analyst 
+Email: aigerim.aibekova@example.com 
+Summary: 
+Data Analyst with a strong foundation in statistical analysis and data visualization. Proﬁcient in 
+SQL, Excel, and BI tools, with a proven ability to transform data into strategic insights. 
+Skills: 
+ 
+Data Analysis & Visualization: Tableau, Power BI 
+ 
+Statistical Analysis: R, Python 
+ 
+Database Management: SQL 
+ 
+Reporting & Dashboarding 
+Experience: 
+ 
+Analyzed customer data to support product development, leading to a 10% increase in user 
+retention. 
+ 
+Built automated reporting tools, saving 5 hours of manual work weekly. 
+Education: 
+Bachelor’s in Statistics, KIMEP University 
+ 
+",0.08698970716024992,en
+094ab102-a04e-441f-8822-25ddb471f9d2,aigul.kassenova@example.com,"Aigul Kassenova - Quality Assurance Tester 
+Contact: 
+Email: aigul.kassenova@example.com 
+Summary: 
+Quality Assurance Tester with a solid foundation in software testing methodologies. Experienced in 
+both manual and automated testing, with a keen eye for detail. Known for identifying bugs and 
+ensuring high-quality releases for clients. 
+Skills: 
+• 
+Test Planning & Execution 
+• 
+Manual & Automated Testing 
+• 
+Bug Tracking (JIRA) 
+• 
+Regression & Performance Testing 
+• 
+Selenium, JUnit 
+Professional Experience: 
+• 
+Quality Assurance Tester, QA Solutions Group 
+Executed test cases and automated scripts, reducing post-release defects by 20%. 
+• 
+Junior QA Tester, Digital Assurance Co. 
+Conducted manual tests and documented results, ensuring smooth user experiences for 
+new software releases. 
+Education: 
+Bachelor’s in Software Engineering, Nazarbayev University 
+ 
+",0.08665487117201355,en
+b7663427-4bf5-444c-bdf8-629457ec96a6,aigul.kassenova@example.com,"Aigul Kassenova - Quality Assurance Tester 
+Contact: 
+Email: aigul.kassenova@example.com 
+Summary: 
+Quality Assurance Tester with a solid foundation in software testing methodologies. Experienced in 
+both manual and automated testing, with a keen eye for detail. Known for identifying bugs and 
+ensuring high-quality releases for clients. 
+Skills: 
+ 
+Test Planning & Execution 
+ 
+Manual & Automated Testing 
+ 
+Bug Tracking (JIRA) 
+ 
+Regression & Performance Testing 
+ 
+Selenium, JUnit 
+Professional Experience: 
+ 
+Quality Assurance Tester, QA Solutions Group 
+Executed test cases and automated scripts, reducing post-release defects by 20%. 
+ 
+Junior QA Tester, Digital Assurance Co. 
+Conducted manual tests and documented results, ensuring smooth user experiences for 
+new software releases. 
+Education: 
+Bachelor’s in Software Engineering, Nazarbayev University 
+ 
+",0.08665487117201355,en
+00994ab0-a0fe-49d5-9faf-bed0c7941596,meruert.sagyndykova@example.com,"Meruert Sagyndykova 
+Position: Project Manager 
+Email: meruert.sagyndykova@example.com 
+Summary: 
+Project Manager with experience in leading software development projects. Skilled in Agile 
+methodologies and cross-functional team management. Known for delivering projects on time and 
+aligning them with business goals. 
+Skills: 
+ 
+Project Planning & Execution 
+ 
+Agile Methodologies (Scrum, Kanban) 
+ 
+Risk Management & Issue Resolution 
+ 
+Stakeholder Communication 
+Experience: 
+ 
+Successfully managed software projects, resulting in a 95% client satisfaction rate. 
+ 
+Implemented Agile practices that improved team productivity by 20%. 
+Education: 
+Bachelor’s in Business Administration, KIMEP University 
+ 
+",0.0780448717484113,en

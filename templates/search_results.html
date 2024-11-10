@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        .action-btn {
+            margin-top: 5px;
+            margin-right: 5px;
+        }
+        .chart-container {
+            position: relative;
+            height: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>Search Results for "{{ query[:50] }}..."</h2>
+        <table class="table table-bordered" id="resultsTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Email</th>
+                    <th>Resume Text</th>
+                    <th>Score</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for resume in resumes %}
+                <tr>
+                    <td>{{ resume.id }}</td>
+                    <td><code>{{ resume.email }}</code></td>
+                    <td><i>{{ resume.resume_text[:100] }}...</i></td> <!-- Truncate long text for readability -->
+                    <td class="score-cell font-weight-bold">{{ resume.score }}</td>
+                    <td>
+                        <button class="btn btn-primary btn-sm action-btn" onclick="openInviteModal('{{ resume.id }}', '{{ resume.email }}')">Invite</button>
+                        <button class="btn btn-info btn-sm action-btn" onclick="analyzeCandidate('{{ resume.id }}')">Analyze</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="/" class="btn btn-secondary">Back to Search</a>
+    </div>
+
+    <!-- Invite Modal -->
+    <div class="modal fade" id="inviteModal" tabindex="-1" aria-labelledby="inviteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="inviteModalLabel">Send Invitation</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="inviteForm">
+                        <div class="form-group">
+                            <label for="candidateEmail">Candidate Email:</label>
+                            <input type="email" class="form-control" id="candidateEmail" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="invitationMessage">Invitation Message:</label>
+                            <textarea class="form-control" id="invitationMessage" rows="8">Dear Candidate, 
+
+We are pleased to invite you to discuss a potential opportunity with our company. Please let us know your availability for a meeting.
+
+Best regards,
+Freedom Telecom</textarea>
+                        </div>
+                        <button type="button" class="btn btn-primary" onclick="sendInvitation()">Send Invitation</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Analyze Candidate Modal -->
+    <div class="modal fade" id="analyzeCandidateModal" tabindex="-1" aria-labelledby="analyzeCandidateLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="analyzeCandidateLabel">Candidate Analysis</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Candidate Fit Description -->
+                    <p id="candidateFitText">This candidate has an excellent fit for the role based on relevant skills and experience.</p>
+                    
+                    <!-- Suitability Emoji -->
+                    <p id="candidateSuitabilityEmoji" style="font-size: 40px;"></p>  <!-- Emoji will be displayed here -->
+
+                    <!-- Main Points List -->
+                    <h6>Main Suitability Points:</h6>
+                    <ul id="candidatePoints">
+                        <li>Highly relevant experience in similar roles</li>
+                        <li>Strong skill match for the requirements</li>
+                        <li>Good cultural fit based on past work</li>
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript and Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        function openInviteModal(candidateId, candidateEmail) {
+            document.getElementById('candidateEmail').value = candidateEmail;
+            document.getElementById('inviteModal').dataset.candidateId = candidateId;
+            $('#inviteModal').modal('show');
+        }
+
+        function sendInvitation() {
+            const candidateId = document.getElementById('inviteModal').dataset.candidateId;
+            const candidateEmail = document.getElementById('candidateEmail').value;
+            const invitationMessage = document.getElementById('invitationMessage').value;
+
+            fetch(`/send_invitation/${candidateId}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    email: candidateEmail,
+                    message: invitationMessage
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(`Invitation sent to ${candidateEmail}`);
+                $('#inviteModal').modal('hide');
+            })
+            .catch(error => console.error('Error:', error));
+        }
+        
+        function analyzeCandidate(candidateId, jobRequirements) {
+            const url = `/api/get_ai_analysis?candidate_id=${candidateId}&requirements=${encodeURIComponent(jobRequirements)}`;
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    const fitScore = data.score;
+                    const mainPoints = data.main_points;
+
+                    document.getElementById("candidateFitText").textContent = `Candidate ${candidateId} has a fit score of ${fitScore} for the role.`;
+
+                    const candidatePointsList = document.getElementById("candidatePoints");
+                    candidatePointsList.innerHTML = ""; 
+                    mainPoints.forEach(point => {
+                        const listItem = document.createElement("li");
+                        listItem.textContent = point;
+                        candidatePointsList.appendChild(listItem);
+                    });
+
+                    updateSuitabilityEmoji(fitScore);
+
+                    $('#analyzeCandidateModal').modal('show');
+                })
+                .catch(error => console.error('Error fetching AI analysis:', error));
+        }
+
+        function updateSuitabilityEmoji(fitScore) {
+            const emojiElement = document.getElementById("candidateSuitabilityEmoji");
+
+            let emoji = "";
+            if (fitScore <= 10) {
+                emoji = "😞";  // Sad
+            } else if (fitScore <= 30) {
+                emoji = "😐";  // Neutral
+            } else if (fitScore <= 60) {
+                emoji = "🙂";  // Happy
+            } else if (fitScore <= 90) {
+                emoji = "😊";  // Very Happy
+            } else {
+                emoji = "😃";  // Excited
+            }
+
+            emojiElement.textContent = emoji;
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const scoreCells = document.querySelectorAll("td.score-cell");
+    
+            const scores = Array.from(scoreCells).map(cell => parseFloat(cell.textContent));
+            const minScore = Math.min(...scores);
+            const maxScore = Math.max(...scores);
+            const scoreRange = maxScore - minScore;
+
+            scoreCells.forEach(cell => {
+                const score = parseFloat(cell.textContent);
+                const normalizedScore = (score - minScore) / scoreRange;
+                
+                const red = Math.floor(255 * (1 - normalizedScore));
+                const green = Math.floor(255 * normalizedScore);
+                
+                cell.style.color = `rgb(${red}, ${green}, 0)`;
+            });
+        });
+    </script>
+</body>
+</html>
