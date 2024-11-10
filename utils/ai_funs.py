@@ -28,14 +28,6 @@ Example:
 '''
 
 def get_ai_feedback_for_resume(resume_text, requirements_text, lang):
-    return {
-        "score": 80,
-        "main_points": [
-            "The candidate has experience with Python and SQL.",
-            "The candidate has experience with data analysis."
-        ]
-    }
-
     full_prompt = prompt_template.format(resume_text=resume_text, requirements_text=requirements_text, lang=lang)
 
     data = {

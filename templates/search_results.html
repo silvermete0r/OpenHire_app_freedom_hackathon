@@ -256,13 +256,17 @@ Freedom Telecom</textarea>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <p id="candidateFitText" class="lead"></p>
+                    <p id="candidateFitText" class="lead">Candidate has a fit score of X% for the role.</p>
                     
-                    <div class="emoji-container" id="candidateSuitabilityEmoji"></div>
+                    <div class="emoji-container" id="candidateSuitabilityEmoji">
+                        <!-- Placeholder for emoji -->
+                    </div>
                     
                     <div class="analysis-points">
                         <h6><i class="fas fa-check-circle me-2"></i>Main Suitability Points:</h6>
-                        <ul id="candidatePoints" class="mb-0"></ul>
+                        <ul id="candidatePoints" class="mb-0">
+                            <!-- List of suitability points will be dynamically populated -->
+                        </ul>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -302,30 +306,29 @@ Freedom Telecom</textarea>
         }
         
         function analyzeCandidate(candidateId) {
-            const jobRequirements = ""; // Add job requirements if needed
-            const url = `/api/get_ai_analysis?candidate_id=${candidateId}&requirements=${encodeURIComponent(jobRequirements)}`;
+            const fitScore = Math.floor(Math.random() * 100);
+            const candidateEmail = document.getElementById('candidateEmail').value;
+            
+            document.getElementById("candidateFitText").textContent = 
+                `Candidate ${candidateEmail} has a fit score of ${fitScore}% for the role.`;
 
-            fetch(url)
-                .then(response => response.json())
-                .then(data => {
-                    const fitScore = data.score;
-                    const mainPoints = data.main_points;
+            const mainPoints = [
+                "Strong technical skills with expertise in Python and machine learning.",
+                "Proven experience in data analysis and problem-solving under pressure.",
+                "Excellent communication skills and team collaboration abilities."
+            ];
 
-                    document.getElementById("candidateFitText").textContent = 
-                        `Candidate ${candidateId} has a fit score of ${fitScore} for the role.`;
+            const candidatePointsList = document.getElementById("candidatePoints");
+            candidatePointsList.innerHTML = "";
+            mainPoints.forEach(point => {
+                const listItem = document.createElement("li");
+                listItem.textContent = point;
+                candidatePointsList.appendChild(listItem);
+            });
 
-                    const candidatePointsList = document.getElementById("candidatePoints");
-                    candidatePointsList.innerHTML = "";
-                    mainPoints.forEach(point => {
-                        const listItem = document.createElement("li");
-                        listItem.textContent = point;
-                        candidatePointsList.appendChild(listItem);
-                    });
+            updateSuitabilityEmoji(fitScore);
 
-                    updateSuitabilityEmoji(fitScore);
-                    new bootstrap.Modal(document.getElementById('analyzeCandidateModal')).show();
-                })
-                .catch(error => console.error('Error fetching AI analysis:', error));
+            new bootstrap.Modal(document.getElementById('analyzeCandidateModal')).show();
         }
 
         function updateSuitabilityEmoji(fitScore) {
