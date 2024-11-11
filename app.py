@@ -17,6 +17,10 @@ headers = {
 def index():
     return render_template('index.html')
 
+@app.route('/resumes/<filename>')
+def get_resume(filename):
+    return send_from_directory('data/filtered_data', filename)
+
 @app.route('/api/get_info_by_id', methods=['GET'])
 def get_info_by_id():
     id = request.args.get('id', '')
